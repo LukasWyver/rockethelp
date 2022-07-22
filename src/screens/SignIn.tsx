@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Alert } from "react-native";
+import auth from "@react-native-firebase/auth";
 import Logo from "../assets/logo_primary.svg";
 import {
   VStack,
@@ -14,18 +16,26 @@ import { Button } from "../components/Button";
 import { MaterialIcons } from "@expo/vector-icons";
 
 export function SignIn() {
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
   const [show, setShow] = useState(false);
-  const [passwordChecked, setPasswordChecked] = useState(false);
 
   const { colors } = useTheme();
 
-  function passwordCheck() {
-    if (password.length < 6 && password.length > 12) {
-      setPasswordChecked(true);
+  function handlePasswordError() {
+    if (password.length < 6) {
+      setPasswordError(true);
     }
     return;
+  }
+
+  function handleSignIn() {
+    if (!email || !password) {
+      return Alert.alert("Entrar", "Informe e-mail e senha.");
+    }
+
+    handlePasswordError();
   }
 
   return (
@@ -34,13 +44,13 @@ export function SignIn() {
       <Heading color="gray.100" fontSize="xl" mt={20} mb={6}>
         Acesse sua conta
       </Heading>
-      <FormControl mb={4} isInvalid>
+      <FormControl mb={4}>
         <Input
           placeholder="E-mail"
           InputLeftElement={
             <Icon as={<Envelope color={colors.gray[300]} />} ml={4} />
           }
-          onChangeText={setName}
+          onChangeText={setEmail}
         />
       </FormControl>
       <FormControl mb={8}>
@@ -64,7 +74,7 @@ export function SignIn() {
           }
         />
 
-        {passwordChecked ? (
+        {passwordError ? (
           <FormControl.ErrorMessage
             leftIcon={<WarningOutlineIcon size="xs" mr={1} />}
           >
@@ -72,11 +82,11 @@ export function SignIn() {
           </FormControl.ErrorMessage>
         ) : (
           <FormControl.HelperText>
-            digite uma senha de no minimo 6 e até 12 digitos.
+            digite uma senha de no minimo 6 digitos.
           </FormControl.HelperText>
         )}
       </FormControl>
-      <Button title="Entrar" w="full" />
+      <Button title="Entrar" w="full" onPress={handleSignIn} />
     </VStack>
   );
 }
