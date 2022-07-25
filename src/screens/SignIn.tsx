@@ -86,6 +86,7 @@ export function SignIn() {
       <FormControl mb={4} isInvalid={emailIsInvalid}>
         <Input
           placeholder="E-mail"
+          keyboardType="email-address"
           InputLeftElement={
             <Icon as={<Envelope color={colors.gray[300]} />} ml={4} />
           }
