@@ -104,7 +104,7 @@ export function Details() {
 
   return (
     <VStack flex={1} bg="gray.700">
-      <Box p={6} bg="gray.600">
+      <Box px={6} bg="gray.600">
         <Header title="solicitação" />
       </Box>
 
@@ -153,7 +153,6 @@ export function Details() {
               placeholder="Descrição da solução"
               onChangeText={setSolution}
               textAlignVertical="top"
-              bg="gray.600"
               multiline
               h={24}
             />
