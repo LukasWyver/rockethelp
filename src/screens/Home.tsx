@@ -10,6 +10,9 @@ import {
   Heading,
   FlatList,
   Center,
+  useToast,
+  Switch,
+  useColorMode,
 } from "native-base";
 import { SignOut, ChatTeardropText } from "phosphor-react-native";
 import auth from "@react-native-firebase/auth";
@@ -32,6 +35,9 @@ export function Home() {
   const [orders, setOrders] = useState<OrderProps[]>([]);
   const { colors } = useTheme();
   const navigation = useNavigation();
+  const toast = useToast();
+
+  const { colorMode, toggleColorMode } = useColorMode();
 
   function handleNewOrder() {
     navigation.navigate("new");
@@ -41,6 +47,12 @@ export function Home() {
     navigation.navigate("details", { orderId });
   }
 
+  function handleToast() {
+    toast.show({
+      description: "Você se desconectou",
+    });
+  }
+
   function handleLogout() {
     auth()
       .signOut()
@@ -48,6 +60,8 @@ export function Home() {
         console.log(error);
         return Alert.alert("Sair", "Não foi possível sair.");
       });
+
+    handleToast();
   }
 
   useEffect(() => {
@@ -86,14 +100,28 @@ export function Home() {
         px={6}
       >
         <Logo />
-        <IconButton
-          icon={<SignOut size={26} color={colors.gray[300]} />}
-          onPress={handleLogout}
-          rounded="sm"
-          _pressed={{
-            bg: "gray.500",
-          }}
-        />
+
+        <HStack>
+          <Switch
+            size="sm"
+            colorScheme="emerald"
+            isChecked={colorMode === "light"}
+            onToggle={toggleColorMode}
+            aria-label={
+              colorMode === "light"
+                ? "troque para o tema escuro"
+                : "troque para o tema claro"
+            }
+          />
+          <IconButton
+            icon={<SignOut size={26} color={colors.gray[300]} />}
+            onPress={handleLogout}
+            rounded="sm"
+            _pressed={{
+              bg: "gray.500",
+            }}
+          />
+        </HStack>
       </HStack>
 
       <VStack flex={1} px={6}>

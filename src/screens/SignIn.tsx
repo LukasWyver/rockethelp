@@ -96,6 +96,7 @@ export function SignIn() {
             <Icon as={<Envelope color={colors.gray[300]} />} ml={4} />
           }
           onChangeText={setEmail}
+          autoComplete="email"
         />
         <FormControl.ErrorMessage
           leftIcon={<WarningOutlineIcon size="xs" mr={1} />}
