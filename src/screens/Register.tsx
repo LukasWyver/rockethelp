@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Alert } from "react-native";
-import { VStack } from "native-base";
+import { useTheme, VStack } from "native-base";
 import firestore from "@react-native-firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
 
@@ -9,6 +9,7 @@ import { Header } from "../components/Header";
 import { Input } from "../components/Input";
 
 export function Register() {
+  const { colors } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
   const [patrimony, setPatrimony] = useState("");
   const [description, setDescription] = useState("");
@@ -45,7 +46,16 @@ export function Register() {
   }
 
   return (
-    <VStack flex={1} p={6} bg="gray.600">
+    <VStack
+      flex={1}
+      p={6}
+      _dark={{
+        bg: "gray.600",
+      }}
+      _light={{
+        bg: colors.gray[50],
+      }}
+    >
       <Header title="Solicitação" />
 
       <Input

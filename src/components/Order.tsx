@@ -33,7 +33,12 @@ export function Order({ data, ...rest }: Props) {
   return (
     <Pressable {...rest}>
       <HStack
-        bg="gray.600"
+        _dark={{
+          bg: "gray.600",
+        }}
+        _light={{
+          bg: colors.gray[50],
+        }}
         mb={4}
         alignItems="center"
         justifyContent="space-between"
@@ -43,19 +48,46 @@ export function Order({ data, ...rest }: Props) {
         <Box h="full" w={2} bg={statusColor} />
 
         <VStack flex={1} my={5} ml={5}>
-          <Text color="white" fontSize="md">
+          <Text
+            _dark={{
+              color: "white",
+            }}
+            _light={{
+              color: colors.gray[300],
+            }}
+            fontSize="md"
+          >
             Patrimônio {data.patrimony}
           </Text>
 
           <HStack alignItems="center">
-            <ClockAfternoon size={15} color={colors.gray[300]} />
-            <Text color="gray.200" fontSize="xs" ml={1}>
+            <ClockAfternoon size={15} color={colors.gray[200]} />
+            <Text
+              _dark={{
+                color: "gray.200",
+              }}
+              _light={{
+                color: colors.gray[200],
+              }}
+              fontSize="xs"
+              ml={1}
+            >
               {data.when}
             </Text>
           </HStack>
         </VStack>
 
-        <Circle bg="gray.500" h={12} w={12} mr={5}>
+        <Circle
+          _dark={{
+            bg: "gray.500",
+          }}
+          _light={{
+            bg: "white",
+          }}
+          h={12}
+          w={12}
+          mr={5}
+        >
           {data.status === "closed" ? (
             <CircleWavyCheck size={24} color={statusColor} />
           ) : (

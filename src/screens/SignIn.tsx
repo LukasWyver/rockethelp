@@ -83,9 +83,30 @@ export function SignIn() {
   }
 
   return (
-    <VStack flex={1} alignItems="center" bg="gray.600" px={8} pt={24}>
+    <VStack
+      flex={1}
+      alignItems="center"
+      _dark={{
+        bg: "gray.600",
+      }}
+      _light={{
+        bg: colors.gray[50],
+      }}
+      px={8}
+      pt={24}
+    >
       <Logo />
-      <Heading color="gray.100" fontSize="xl" mt={20} mb={6}>
+      <Heading
+        _dark={{
+          color: "gray.100",
+        }}
+        _light={{
+          color: colors.gray[300],
+        }}
+        fontSize="xl"
+        mt={20}
+        mb={6}
+      >
         Acesse sua conta
       </Heading>
       <FormControl mb={4} isInvalid={emailIsInvalid}>

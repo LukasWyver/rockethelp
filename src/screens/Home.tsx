@@ -89,12 +89,26 @@ export function Home() {
   }, [statusSelected]);
 
   return (
-    <VStack flex={1} pb={6} bg="gray.700">
+    <VStack
+      flex={1}
+      pb={6}
+      _dark={{
+        bg: "gray.700",
+      }}
+      _light={{
+        bg: colors.gray[75],
+      }}
+    >
       <HStack
         w="full"
         justifyContent="space-between"
         alignItems="center"
-        bg="gray.600"
+        _dark={{
+          bg: "gray.600",
+        }}
+        _light={{
+          bg: colors.gray[50],
+        }}
         pt={12}
         pb={5}
         px={6}
@@ -105,6 +119,7 @@ export function Home() {
           <Switch
             size="sm"
             colorScheme="emerald"
+            defaultIsChecked={false}
             isChecked={colorMode === "light"}
             onToggle={toggleColorMode}
             aria-label={
@@ -117,9 +132,6 @@ export function Home() {
             icon={<SignOut size={26} color={colors.gray[300]} />}
             onPress={handleLogout}
             rounded="sm"
-            _pressed={{
-              bg: "gray.500",
-            }}
           />
         </HStack>
       </HStack>
@@ -132,8 +144,26 @@ export function Home() {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Heading color="gray.100">Solicitações</Heading>
-          <Text color="gray.200">{orders.length}</Text>
+          <Heading
+            _dark={{
+              color: "gray.100",
+            }}
+            _light={{
+              color: colors.gray[300],
+            }}
+          >
+            Solicitações
+          </Heading>
+          <Text
+            _dark={{
+              color: "gray.200",
+            }}
+            _light={{
+              color: colors.gray[300],
+            }}
+          >
+            {orders.length}
+          </Text>
         </HStack>
         <HStack space={3} mb={8}>
           <Filter
@@ -163,8 +193,21 @@ export function Home() {
             contentContainerStyle={{ paddingBottom: 100 }}
             ListEmptyComponent={() => (
               <Center>
-                <ChatTeardropText size={40} color={colors.gray[300]} />
-                <Text color="gray.300" fontSize="xl" mt={6} textAlign="center">
+                <ChatTeardropText
+                  size={40}
+                  color={
+                    colorMode === "light" ? colors.gray[200] : colors.gray[400]
+                  }
+                />
+                <Text
+                  _dark={{ color: colors.gray[400] }}
+                  _light={{
+                    color: colors.gray[200],
+                  }}
+                  fontSize="xl"
+                  mt={6}
+                  textAlign="center"
+                >
                   Você ainda não possui {"\n"} solicitações{" "}
                   {statusSelected === "open" ? "em andamento" : "finalizadas"}.
                 </Text>

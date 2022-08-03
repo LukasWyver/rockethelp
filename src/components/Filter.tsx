@@ -16,7 +16,10 @@ export function Filter({ title, isActive = false, type, ...rest }: Props) {
       variant="outline"
       borderWidth={isActive ? 1 : 0}
       borderColor={colorType}
-      bgColor="gray.600"
+      _dark={{ bg: "gray.600" }}
+      _light={{
+        bg: colors.gray[50],
+      }}
       flex={1}
       size="sm"
       {...rest}

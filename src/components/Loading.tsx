@@ -1,9 +1,18 @@
 import React from "react";
-import { Center, Spinner } from "native-base";
+import { Center, Spinner, useTheme } from "native-base";
 
 export function Loading() {
+  const { colors } = useTheme();
   return (
-    <Center flex={1} bg="gray.700">
+    <Center
+      flex={1}
+      _dark={{
+        bg: "gray.700",
+      }}
+      _light={{
+        bg: colors.gray[75],
+      }}
+    >
       <Spinner color="secondary.700" />
     </Center>
   );

@@ -1,10 +1,16 @@
-import { Button as NativeBaseButton, IButtonProps, Heading } from "native-base";
+import {
+  Button as NativeBaseButton,
+  IButtonProps,
+  Heading,
+  useTheme,
+} from "native-base";
 
 type Props = IButtonProps & {
   title: string;
 };
 
 export function Button({ title, ...rest }: Props) {
+  const { colors } = useTheme();
   return (
     <NativeBaseButton
       bg="green.700"
@@ -14,7 +20,15 @@ export function Button({ title, ...rest }: Props) {
       _pressed={{ bg: "green.500" }}
       {...rest}
     >
-      <Heading color="white" fontSize="sm">
+      <Heading
+        _dark={{
+          color: "white",
+        }}
+        _light={{
+          color: colors.gray[400],
+        }}
+        fontSize="sm"
+      >
         {title}
       </Heading>
     </NativeBaseButton>

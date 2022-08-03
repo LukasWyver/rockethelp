@@ -103,12 +103,37 @@ export function Details() {
   }
 
   return (
-    <VStack flex={1} bg="gray.700">
-      <Box px={6} bg="gray.600">
+    <VStack
+      flex={1}
+      _dark={{
+        bg: "gray.700",
+      }}
+      _light={{
+        bg: colors.gray[50],
+      }}
+    >
+      <Box
+        px={6}
+        _dark={{
+          bg: "gray.600",
+        }}
+        _light={{
+          bg: colors.gray[50],
+        }}
+      >
         <Header title="solicitação" />
       </Box>
 
-      <HStack bg="gray.500" justifyContent="center" p={4}>
+      <HStack
+        _dark={{
+          bg: "gray.500",
+        }}
+        _light={{
+          bg: "white",
+        }}
+        justifyContent="center"
+        p={4}
+      >
         {order.status === "closed" ? (
           <CircleWavyCheck size={22} color={colors.green[300]} />
         ) : (
