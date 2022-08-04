@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
-import { Box, HStack, ScrollView, Text, useTheme, VStack } from "native-base";
+import {
+  Box,
+  HStack,
+  ScrollView,
+  Text,
+  useTheme,
+  useToast,
+  VStack,
+} from "native-base";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import firestore from "@react-native-firebase/firestore";
 import {
@@ -31,6 +39,7 @@ type OrderDetails = OrderProps & {
 };
 
 export function Details() {
+  const toast = useToast();
   const [solution, setSolution] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [order, setOrder] = useState<OrderDetails>({} as OrderDetails);
@@ -40,6 +49,19 @@ export function Details() {
 
   const navigation = useNavigation();
   const { orderId } = route.params as RouteParams;
+
+  function OrderAlertClose() {
+    toast.show({
+      placement: "top",
+      render: () => {
+        return (
+          <Box bg={colors.green[500]} px="2" py="1" rounded="sm" mt={12}>
+            Solicitação finalizada.
+          </Box>
+        );
+      },
+    });
+  }
 
   function handleOrderClose() {
     if (!solution) {
@@ -58,8 +80,9 @@ export function Details() {
         closed_at: firestore.FieldValue.serverTimestamp(),
       })
       .then(() => {
-        Alert.alert("Solicitação", "Solicitação encerrada.");
+        // Alert.alert("Solicitação", "Solicitação encerrada.");
         navigation.goBack();
+        OrderAlertClose();
       })
       .catch((error) => {
         console.log(error);

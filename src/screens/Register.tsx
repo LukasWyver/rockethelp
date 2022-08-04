@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Alert } from "react-native";
-import { useTheme, VStack } from "native-base";
+import { useTheme, VStack, useToast, Box } from "native-base";
 import firestore from "@react-native-firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
 
@@ -9,12 +9,25 @@ import { Header } from "../components/Header";
 import { Input } from "../components/Input";
 
 export function Register() {
+  const toast = useToast();
   const { colors } = useTheme();
+  const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const [patrimony, setPatrimony] = useState("");
   const [description, setDescription] = useState("");
 
-  const navigation = useNavigation();
+  function newAddOrderAlert() {
+    toast.show({
+      placement: "top",
+      render: () => {
+        return (
+          <Box bg={colors.green[500]} px="2" py="1" rounded="sm" mt={12}>
+            Nova solicitação cadastrada.
+          </Box>
+        );
+      },
+    });
+  }
 
   function handleNewOrderRegister() {
     if (!patrimony || !description) {
@@ -32,8 +45,9 @@ export function Register() {
         created_at: firestore.FieldValue.serverTimestamp(),
       })
       .then(() => {
-        Alert.alert("Solicitação", "Solicitação registrada com sucesso.");
+        // Alert.alert("Solicitação", "Solicitação registrada com sucesso.");
         navigation.goBack();
+        newAddOrderAlert();
       })
       .catch((error) => {
         console.log(error);
@@ -64,6 +78,7 @@ export function Register() {
         value={patrimony}
         onChangeText={setPatrimony}
       />
+
       <Input
         placeholder="Descrição do problema"
         flex={1}
@@ -72,6 +87,7 @@ export function Register() {
         textAlignVertical="top"
         value={description}
         onChangeText={setDescription}
+        keyboardType="default"
       />
 
       <Button
